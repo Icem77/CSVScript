@@ -1,65 +1,70 @@
 import argparse
 import sys
 
-def main():
-    dni = ["pn", "wt", "śr", "czw", "pt", "sob", "nd"]
+def main(days=["pn", "wt", "śr", "czw", "pt", "sob", "nd"]):
 
     parser = argparse.ArgumentParser(
-        description="Skrypt do czytania i pisania do plików CSV w struktorze katalogów [miesiąc]/[dzień]/[pora_dnia]"
+        description="Script for reading and writing CSV files in structure of catalogues [miesiąc]/[dzień]/[pora_dnia]."
     )
 
     parser.add_argument(
         '-m', '--miesiace',
         nargs='+',
-        help="Podaj dowolną liczb miesięcy",
+        help="Insert any number of polish month names.",
         required=True
     )
 
     parser.add_argument(
         '-d', '--dni',
         nargs='+',
-        help="Podaj tyle samo dni lub ich zakresów (dzien1-dzien2) ile zostało podanych miesięcy",
+        help="""Insert the same amount of days or days ranges (day1-day2) as you did for months.
+                Available day names are [pn, wt, śr, czw, pt, sob, nd].""",
         required=True
     )
 
     parser.add_argument(
         '-p', '--pory',
         nargs='+',
-        help="Dla kazdego z wcześniej podanych dni podaj porę [r(rano)/w(wieczór)], domyslnie pora zostanie ustawiona na 'r'"
+        help="For each given day insert the time of the day [r(rano)/w(wieczór)], default will be 'r'."
     )
 
     args = parser.parse_args()
 
     if (len(args.miesiace) != len(args.dni)):
-        print("Liczba podanych miesięcy nie jest zgodna z liczbą podanych dni lub ich zakresów")
+        print("Amount of months is not equal to amount of days/days ranges.")
         sys.exit(1)
 
     if args.pory is None:
         args.pory = []
 
-
-    krotki_na_sciezki = []
+    #preprocessing on script parameters to create file paths
+    triples_to_paths = []
     for index in range(len(args.miesiace)):
-        dni_z_zakresu = []
+        days_in_range = []
         zakres = args.dni[index].split("-")
-        ind_p = dni.index(zakres[0])
-        ind_k = dni.index(zakres[max(0, len(zakres) - 1)])
+
+        try:
+            ind_p = days.index(zakres[0])
+            ind_k = days.index(zakres[max(0, len(zakres) - 1)])
+        except ValueError:
+            print("Unavailable name day was used, check 'help' for available day names.")
+            sys.exit(1)
+
+        if ind_p > ind_k:
+            print("One of the given day ranges is incorrect.")
+            sys.exit(1)
         
         while (ind_p <= ind_k):
-            dni_z_zakresu.append(dni[ind_p])
+            days_in_range.append(days[ind_p])
             ind_p += 1
         
-        for dzien in dni_z_zakresu:
+        for day in days_in_range:
             if index < len(args.pory): #jezeli zostala podana pora dnia
-                krotki_na_sciezki.append((args.miesiace[index], dzien, args.pory[index]))
+                triples_to_paths.append((args.miesiace[index], day, args.pory[index]))
             else:
-                krotki_na_sciezki.append((args.miesiace[index], dzien, "r"))
+                triples_to_paths.append((args.miesiace[index], day, "r"))
 
-
-    for krotka in krotki_na_sciezki:
-        print(krotka)
-
-
+    
 
 if __name__ == "__main__":
     main()
