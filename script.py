@@ -28,6 +28,18 @@ def main(days=["pn", "wt", "śr", "czw", "pt", "sob", "nd"]):
         help="For each given day insert the time of the day [r(rano)/w(wieczór)], default will be 'r'."
     )
 
+    parser.add_argument(
+        '-t', '--tworzenie',
+        nargs=0,
+        help="Specifies that we want to create files at given directories"
+    )
+
+    parser.add_argument(
+        '-o', '--odczytywanie',
+        nargs=0,
+        help="Specifies that we want to read files from given directories"
+    )
+
     args = parser.parse_args()
 
     if (len(args.miesiace) != len(args.dni)):
@@ -64,7 +76,19 @@ def main(days=["pn", "wt", "śr", "czw", "pt", "sob", "nd"]):
             else:
                 triples_to_paths.append((args.miesiace[index], day, "r"))
 
-    
+    if (args.tworzenie and args.odczytywanie):
+        print("Can't write AND read from files, choose exactly one action.")
+        sys.exit(1)
+    elif args.tworzenie:
+        #create files at directories
+        pass
+    elif args.odczytywanie:
+        pass
+        #read files from directories
+    else:
+        print("Action on directories was not specified, choose one flag from -t and -o.")
+        sys.exit(1)
+
 
 if __name__ == "__main__":
     main()
