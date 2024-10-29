@@ -23,11 +23,11 @@ def create_files(triples: List[Tuple[str, str, str]]) -> List[str]:
 
     for month, day, time in triples:
         # Create directory if doesn't exist
-        dir_path = os.path.join(month, day)
+        dir_path = os.path.join(month, day, time)
         os.makedirs(dir_path, exist_ok=True)
 
         # Create the path and add to return list
-        file_path = os.path.join(dir_path, f"{time}.csv")
+        file_path = os.path.join(dir_path, f"Dane.csv")
         file_paths.append(file_path)
 
         # If file present print info, otherwise create it
@@ -62,7 +62,7 @@ def check_and_sum(triples: List[Tuple[str, str, str]], verbose: bool = True) -> 
     total_time = 0
 
     for month, day, time in triples:
-        file_path = os.path.join(month, day, f"{time}.csv")
+        file_path = os.path.join(month, day, time, f"Dane.csv")
 
         if not os.path.exists(file_path):
             print(f"File not found: {file_path}")
