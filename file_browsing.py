@@ -2,6 +2,7 @@ import os
 import csv
 from typing import List, Tuple
 
+import csv_creator
 
 def create_files(triples: List[Tuple[str, str, str]]) -> List[str]:
     """
@@ -32,10 +33,11 @@ def create_files(triples: List[Tuple[str, str, str]]) -> List[str]:
 
         # If file present print info, otherwise create it
         if not os.path.exists(file_path):
-            open(file_path, mode='w').close()  # creates an empty file
+            csv_creator.write_random_csv(file_path)
         else:
             print(
                 f"file {file_path} already found, it's contents will be overwritten")
+            csv_creator.write_random_csv(file_path)
 
     return file_paths
 

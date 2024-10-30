@@ -1,6 +1,8 @@
 import argparse
 import sys
 
+import file_browsing
+
 def main(days=["pn", "wt", "śr", "czw", "pt", "sob", "nd"]):
 
     parser = argparse.ArgumentParser(
@@ -30,13 +32,13 @@ def main(days=["pn", "wt", "śr", "czw", "pt", "sob", "nd"]):
 
     parser.add_argument(
         '-t', '--tworzenie',
-        nargs=0,
+        action='store_true',
         help="Specifies that we want to create files at given directories"
     )
 
     parser.add_argument(
         '-o', '--odczytywanie',
-        nargs=0,
+        action='store_true',
         help="Specifies that we want to read files from given directories"
     )
 
@@ -81,9 +83,9 @@ def main(days=["pn", "wt", "śr", "czw", "pt", "sob", "nd"]):
         sys.exit(1)
     elif args.tworzenie:
         #create files at directories
-        pass
+        file_browsing.create_files(triples_to_paths)
     elif args.odczytywanie:
-        pass
+        file_browsing.check_and_sum(triples_to_paths)
         #read files from directories
     else:
         print("Action on directories was not specified, choose one flag from -t and -o.")
