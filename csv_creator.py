@@ -1,7 +1,3 @@
-#include <bits/stdc++.h>
-
-#define int long long
-
 import csv
 import random
 from typing import List, Tuple
