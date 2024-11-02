@@ -3,7 +3,9 @@ import sys
 
 import file_browsing
 
-def main(days=["pn", "wt", "śr", "czw", "pt", "sob", "nd"]):
+
+def main():
+    days=["pn", "wt", "śr", "czw", "pt", "sob", "nd"]
 
     # create args parser
     parser = argparse.ArgumentParser(
@@ -87,11 +89,9 @@ def main(days=["pn", "wt", "śr", "czw", "pt", "sob", "nd"]):
         print("Can't write AND read from files, choose exactly one action.")
         sys.exit(1)
     elif args.tworzenie:
-        #create files at directories
         file_browsing.create_files(triples_to_paths)
     elif args.odczytywanie:
         file_browsing.check_and_sum(triples_to_paths)
-        #read files from directories
     else:
         print("Action on directories was not specified, choose exaclty one flag from -t and -o.")
         sys.exit(1)
