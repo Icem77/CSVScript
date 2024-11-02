@@ -10,7 +10,7 @@ def main(days=["pn", "wt", "śr", "czw", "pt", "sob", "nd"]):
         description="""Script for reading/writing CSV files in structure of catalogues [miesiąc]/[dzień]/[pora_dnia].
                         Script performs only one type of action per run, it's not possible to write AND read at the same time.
                         If you try to read data from directories/files that do not exist, you will be notified, default value of 0 will be used
-                        for those empty directories/files but the directory/file will NOT be created."""
+                        to calculate sum but the directory/file will NOT be created."""
     )
 
     parser.add_argument(
