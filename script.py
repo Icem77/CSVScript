@@ -4,6 +4,7 @@ import sys
 import file_browsing
 
 
+
 def main():
     days=["pn", "wt", "śr", "czw", "pt", "sob", "nd"]
 
@@ -79,7 +80,7 @@ def main():
             ind_p += 1
         
         for day in days_in_range:
-            if index < len(args.pory): #jezeli zostala podana pora dnia
+            if index < len(args.pory): # if time of the day was given
                 triples_to_paths.append((args.miesiace[index], day, args.pory[index]))
             else:
                 triples_to_paths.append((args.miesiace[index], day, "r"))
@@ -95,6 +96,7 @@ def main():
     else:
         print("Action on directories was not specified, choose exaclty one flag from -t and -o.")
         sys.exit(1)
+
 
 
 if __name__ == "__main__":
